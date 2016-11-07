@@ -21,7 +21,7 @@
     <meta name="referrer" content="never">
 
     <link rel="icon" href="/assets/images/favicon.ico" sizes="64x64" />
-    <link rel="stylesheet" href="/assets/styles/main.css" />
+    <!--<link rel="stylesheet" href="/assets/styles/main.css" />-->
 </head>
 
 <body>
@@ -33,16 +33,24 @@
         <img id="screen_3" src="/assets/images/screen-3.png">
     </a-assets>
 
-    <a-box position="0 .5 -3" rotation="150 0 0" width=".6" height="1.1" depth=".05" color="#0c0c0c"></a-box>
-    <a-box src="#screen_1" position="0 .5 -3" rotation="30 180 0" width=".5625" height="1" depth=".051"></a-box>
+    <!--中間的手機-->
+    <a-box position="0 .5 -3.01" rotation="150 0 0" width=".6" height="1.1" depth=".05" color="#0c0c0c"></a-box>
+    <a-box src="#screen_1" position="0 .5 -3" rotation="30 180 0" width=".5625" height="1" depth=".05"></a-box>
+    <a-cylinder position="0 .2 -3.2" rotation="15 0 0" height=".86" radius=".02" color="#0c0c0c"></a-cylinder>
 
-    <a-box position="1.5 .5 -2.9" rotation="145 -25 0" width=".775" height="1.25" depth=".08" color="#4C7C79"></a-box>
-    <a-box src="#screen_2" position="1.5 .5 -2.9" rotation="35 155 0" width=".75" height="1.2" depth=".081"></a-box>
+    <!--右邊的手機-->
+    <a-box position="1.5 .5 -2.901" rotation="145 -25 0" width=".775" height="1.25" depth=".08" color="#4C7C79"></a-box>
+    <a-box src="#screen_2" position="1.5 .5 -2.9" rotation="35 155 0" width=".75" height="1.2" depth=".08"></a-box>
+    <a-cylinder position="1.5 .2 -3.1" rotation="14.5 0 0" height=".88" radius=".02" color="#4C7C79"></a-cylinder>
 
-    <a-box position="-1.6 .5 -2.6" rotation="148 30 0" width=".6" height="1.1" depth=".04" color="#FCD6D2"></a-box>
-    <a-box src="#screen_3" position="-1.6 .5 -2.6" rotation="32 210 0" width=".5625" height="1" depth=".041"></a-box>
+    <!--左邊的手機-->
+    <a-box position="-1.6 .5 -2.601" rotation="148 30 0" width=".6" height="1.1" depth=".04" color="#FCD6D2"></a-box>
+    <a-box src="#screen_3" position="-1.6 .5 -2.6" rotation="32 210 0" width=".5625" height="1" depth=".04"></a-box>
+    <a-cylinder position="-1.6 .2 -2.75" rotation="10 0 0" height=".86" radius=".02" color="#FCD6D2"></a-cylinder>
 
-    <a-plane src="#wood" height="100" width="100" rotation="-90 0 0"></a-plane>
+
+
+    <a-plane src="#wood" height="10" width="10" rotation="-90 0 0" repeat="repeat"></a-plane>
     <a-sky color="#fefefe"></a-sky>
 </a-scene>
 </body>
