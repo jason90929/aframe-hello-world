@@ -1,22 +1,17 @@
 {
-  "name": "jason-tseng-react-website",
-  "version": "0.5.3",
-  "description": "Gulp, Npm, with React Redux",
+  "name": "aframe-hello-world",
+  "version": "0.0.1",
+  "description": "Aframe Hello World",
   "main": "main.js",
   "scripts": {
     "test": "start"
   },
   "repository": {
     "type": "git",
-    "url": "jason-tseng-react-website"
+    "url": "aframe-hello-world"
   },
   "keywords": [
-    "React",
-    "Redux",
-    "Gulp",
-    "Node",
-    "jQuery",
-    "BootStrap"
+    "aframe"
   ],
   "author": "Jason Tseng",
   "license": "ISC",

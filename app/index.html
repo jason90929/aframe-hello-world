@@ -25,13 +25,26 @@
 </head>
 
 <body>
-    <a-scene>
-        <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-        <a-box position="-1 0.5 -3" rotation="0 45 0" width="1" height="1" depth="1" color="#4CC3D9"></a-box>
-        <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-        <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-        <a-sky color="#ECECEC"></a-sky>
-    </a-scene>
+<a-scene>
+    <a-assets>
+        <img id="wood" src="/assets/images/wood.jpg">
+        <img id="screen_1" src="/assets/images/screen-1.png">
+        <img id="screen_2" src="/assets/images/screen-2.png">
+        <img id="screen_3" src="/assets/images/screen-3.png">
+    </a-assets>
+
+    <a-box position="0 .5 -3" rotation="150 0 0" width=".6" height="1.1" depth=".05" color="#0c0c0c"></a-box>
+    <a-box src="#screen_1" position="0 .5 -3" rotation="30 180 0" width=".5625" height="1" depth=".051"></a-box>
+
+    <a-box position="1.5 .5 -2.9" rotation="145 -25 0" width=".775" height="1.25" depth=".08" color="#4C7C79"></a-box>
+    <a-box src="#screen_2" position="1.5 .5 -2.9" rotation="35 155 0" width=".75" height="1.2" depth=".081"></a-box>
+
+    <a-box position="-1.6 .5 -2.6" rotation="148 30 0" width=".6" height="1.1" depth=".04" color="#FCD6D2"></a-box>
+    <a-box src="#screen_3" position="-1.6 .5 -2.6" rotation="32 210 0" width=".5625" height="1" depth=".041"></a-box>
+
+    <a-plane src="#wood" height="100" width="100" rotation="-90 0 0"></a-plane>
+    <a-sky color="#fefefe"></a-sky>
+</a-scene>
 </body>
 
 </html>
