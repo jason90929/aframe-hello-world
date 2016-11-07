@@ -27,10 +27,11 @@
 <body>
 <a-scene>
     <a-assets>
-        <img id="wood" src="/assets/images/wood.jpg">
-        <img id="screen_1" src="/assets/images/screen-1.png">
-        <img id="screen_2" src="/assets/images/screen-2.png">
-        <img id="screen_3" src="/assets/images/screen-3.png">
+        <img id="wood" src="/assets/images/wood.jpg" crossorigin="anonymous">
+        <img id="screen_1" src="/assets/images/screen-1.png" crossorigin="anonymous">
+        <img id="screen_2" src="/assets/images/screen-2.png" crossorigin="anonymous">
+        <img id="screen_3" src="/assets/images/screen-3.png" crossorigin="anonymous">
+        <img id="sky" src="https://img.gs/bbdkhfbzkk/2048x2048,stretch/http://i.imgur.com/WqlqEkq.jpg" crossorigin="anonymous" />
     </a-assets>
 
     <!--中間的手機-->
@@ -48,7 +49,9 @@
     <a-box src="#screen_3" position="-1.6 .5 -2.6" rotation="32 210 0" width=".5625" height="1" depth=".04"></a-box>
     <a-cylinder position="-1.6 .2 -2.75" rotation="10 0 0" height=".86" radius=".02" color="#FCD6D2"></a-cylinder>
 
-
+    <!-- Basic cylinder. -->
+    <a-cylinder color="#fff" position="-2.5 .5 -1.4" rotation="90 0 120" height=".05" radius=".5"></a-cylinder>
+    <a-box id="sec" color="#000" position="-2.45 .75 -1.4" rotation="0 0 0" width=".01" height=".45" depth=".01"></a-box>
 
     <a-plane src="#wood" height="10" width="10" rotation="-90 0 0" repeat="repeat"></a-plane>
     <a-sky color="#fefefe"></a-sky>
