@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta content="UTF-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <!--<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'">-->
+
+  <base href="/" />
+
+  <title>Jason Tseng - A-Frame Hello World!!</title>
+
+  <meta name="robots" content="index,follow,noodp"><!-- All Search Engines -->
+  <meta name="googlebot" content="index,follow"><!-- Google Specific -->
+  <meta name="google" content="nositelinkssearchbox">
+  <meta name="google" content="notranslate">
+  <meta name="coverage" content="Worldwide">
+  <meta name="distribution" content="Global">
+  <meta name="rating" content="General">
+  <meta name="referrer" content="never">
+
+  <link rel="icon" href="/assets/images/favicon.ico" sizes="64x64" />
+  <script src="https://aframe.io/releases/0.4.0/aframe.min.js"></script>
+</head>
+
+<body>
+<a-scene>
+  <a-assets>
+    <img id="wood" src="/assets/images/wood.jpg" crossorigin="anonymous">
+    <img id="screen_1" src="/assets/images/screen-1.png" crossorigin="anonymous">
+    <img id="screen_2" src="/assets/images/screen-2.png" crossorigin="anonymous">
+    <img id="screen_3" src="/assets/images/screen-3.png" crossorigin="anonymous">
+    <img id="sky" src="https://img.gs/bbdkhfbzkk/2048x2048,stretch/http://i.imgur.com/WqlqEkq.jpg" crossorigin="anonymous" />
+  </a-assets>
+
+  <!--中間的手機-->
+  <a-box position="0 .5 -3.01" rotation="150 0 0" width=".6" height="1.1" depth=".05" color="#0c0c0c"></a-box>
+  <a-box src="#screen_1" position="0 .5 -3" rotation="30 180 0" width=".5625" height="1" depth=".05"></a-box>
+  <a-cylinder position="0 .2 -3.2" rotation="15 0 0" height=".86" radius=".02" color="#0c0c0c"></a-cylinder>
+
+  <!--右邊的手機-->
+  <a-box position="1.5 .5 -2.901" rotation="145 -25 0" width=".775" height="1.25" depth=".08" color="#4C7C79"></a-box>
+  <a-box src="#screen_2" position="1.5 .5 -2.9" rotation="35 155 0" width=".75" height="1.2" depth=".08"></a-box>
+  <a-cylinder position="1.5 .2 -3.1" rotation="14.5 0 0" height=".88" radius=".02" color="#4C7C79"></a-cylinder>
+
+  <!--左邊的手機-->
+  <a-box position="-1.6 .5 -2.601" rotation="148 30 0" width=".6" height="1.1" depth=".04" color="#FCD6D2"></a-box>
+  <a-box src="#screen_3" position="-1.6 .5 -2.6" rotation="32 210 0" width=".5625" height="1" depth=".04"></a-box>
+  <a-cylinder position="-1.6 .2 -2.75" rotation="10 0 0" height=".86" radius=".02" color="#FCD6D2"></a-cylinder>
+
+  <!-- Basic cylinder. -->
+  <a-cylinder color="#fff" position="-2.5 .5 -1.4" rotation="90 0 120" height=".05" radius=".5"></a-cylinder>
+  <a-box id="sec" color="#000" position="-2.45 .75 -1.4" rotation="0 0 0" width=".01" height=".45" depth=".01"></a-box>
+
+  <a-plane src="#wood" height="10" width="10" rotation="-90 0 0" repeat="repeat"></a-plane>
+  <a-sky color="#fefefe"></a-sky>
+</a-scene>
+</body>
+
+</html>

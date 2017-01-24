@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta content="UTF-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <!--<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'">-->
+
+  <base href="/" />
+
+  <title>Jason Tseng - A-Frame Hello World!!</title>
+
+  <meta name="robots" content="index,follow,noodp"><!-- All Search Engines -->
+  <meta name="googlebot" content="index,follow"><!-- Google Specific -->
+  <meta name="google" content="nositelinkssearchbox">
+  <meta name="google" content="notranslate">
+  <meta name="coverage" content="Worldwide">
+  <meta name="distribution" content="Global">
+  <meta name="rating" content="General">
+  <meta name="referrer" content="never">
+
+  <link rel="icon" href="/assets/images/favicon.ico" sizes="64x64" />
+  <script src="https://aframe.io/releases/0.4.0/aframe.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      var alongpathComp = {
+        schema: {
+          path     : { default: ''    },
+          closed   : { default: false },
+          dur      : { default: 1000  }
+        },
+
+        init: function() {
+          var ent = this.el;
+          var d = this.data;
+          var points = d.path.split(' ').map(function(p) {
+            p = p.split(',');
+            return new THREE.Vector3(
+              parseFloat(p[0]),
+              parseFloat(p[1]),
+              parseFloat(p[2])
+            );
+          });
+          var ctor = d.closed ? 'ClosedSplineCurve3' : 'SplineCurve3';
+          var curve = new THREE[ctor](points);
+
+          var onFrame = function onFrame(t) {
+            window.requestAnimationFrame(onFrame);
+            t = t % d.dur;
+            var i = t / d.dur;
+            try {
+              var p = curve.getPoint(i);
+              ent.setAttribute('position', p);
+            } catch (ex) {}
+          };
+
+          onFrame();
+        },
+
+        update: function(oldData) {},
+
+        remove: function() {}
+      };
+
+      AFRAME.registerComponent('alongpath', alongpathComp);
+
+    })();
+  </script>
+</head>
+
+<body>
+<a-scene>
+  <a-entity
+    position="0 2 5"
+    alongpath="path:
+      0,0,0
+      0,15,-2
+      3,14,-3
+      2,2,-1;
+    closed:true;
+    dur:50000"
+  >
+    <a-entity camera look-controls id="player">
+      <a-cursor color="#FFFFFF"/>
+    </a-entity>
+  </a-entity>
+
+  <a-torus color="#43A367" arc="180" radius="3" position="0 0 -3" radius-tubular="0.1"></a-torus>
+  <a-octahedron color="#FF926B" radius="1.5" position="2.2 0 -3"></a-octahedron>
+
+  <a-sky color="#fefefe"></a-sky>
+</a-scene>
+</body>
+
+</html>
