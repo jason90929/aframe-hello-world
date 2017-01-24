@@ -23,75 +23,182 @@
   <link rel="icon" href="/assets/images/favicon.ico" sizes="64x64" />
   <script src="https://aframe.io/releases/0.4.0/aframe.js"></script>
   <script>
-    (function() {
-      'use strict';
 
-      var alongpathComp = {
-        schema: {
-          path     : { default: ''    },
-          closed   : { default: false },
-          dur      : { default: 1000  }
+    // 漸層天空色
+    // http://stackoverflow.com/questions/40454143/gradient-sky-in-a-frame
+    AFRAME.registerShader('gradient', {
+      schema: {
+        topColor: { type: 'vec3', default: '1 0 0', is: 'uniform' },
+        bottomColor: { type: 'vec3', default: '0 0 1', is: 'uniform' },
+        offset: { type: 'float', default: '400', is: 'uniform' },
+        exponent: { type: 'float', default: '0.6', is: 'uniform' }
+      },
+      vertexShader: [
+        'varying vec3 vWorldPosition;',
+
+        'void main() {',
+
+        'vec4 worldPosition = modelMatrix * vec4( position, 1.0 );',
+        'vWorldPosition = worldPosition.xyz;',
+
+        'gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0 );',
+
+        '}'
+      ].join('\n'),
+      fragmentShader: [
+        'uniform vec3 bottomColor;',
+        'uniform vec3 topColor;',
+        'uniform float offset;',
+        'uniform float exponent;',
+        'varying vec3 vWorldPosition;',
+        'void main() {',
+        ' float h = normalize( vWorldPosition + offset ).y;',
+        ' gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( max(h, 0.0 ), exponent ), 0.0 ) ), 1.0 );',
+        '}'
+      ].join('\n')
+    });
+
+    AFRAME.registerPrimitive('a-gradient-sky', {
+      defaultComponents: {
+        geometry: {
+          primitive: 'sphere',
+          radius: 5000,
+          segmentsWidth: 64,
+          segmentsHeight: 20
         },
-
-        init: function() {
-          var ent = this.el;
-          var d = this.data;
-          var points = d.path.split(' ').map(function(p) {
-            p = p.split(',');
-            return new THREE.Vector3(
-              parseFloat(p[0]),
-              parseFloat(p[1]),
-              parseFloat(p[2])
-            );
-          });
-          var ctor = d.closed ? 'ClosedSplineCurve3' : 'SplineCurve3';
-          var curve = new THREE[ctor](points);
-
-          var onFrame = function onFrame(t) {
-            window.requestAnimationFrame(onFrame);
-            t = t % d.dur;
-            var i = t / d.dur;
-            try {
-              var p = curve.getPoint(i);
-              ent.setAttribute('position', p);
-            } catch (ex) {}
-          };
-
-          onFrame();
+        material: {
+          shader: 'gradient'
         },
+        scale: '-1 1 1'
+      },
 
-        update: function(oldData) {},
+      mappings: {
+        topColor: 'material.topColor',
+        bottomColor: 'material.bottomColor',
+        offset: 'material.offset',
+        exponent: 'material.exponent'
+      }
+    });
 
-        remove: function() {}
-      };
+    var alongpathComp = {
+      schema: {
+        path: { default: '' },
+        closed: { default: false },
+        dur: { default: 1000 }
+      },
 
-      AFRAME.registerComponent('alongpath', alongpathComp);
+      init: function () {
+        var ent = this.el;
+        var d = this.data;
+        var points = d.path.split(' ').map(function (p) {
 
-    })();
+          p = p.split(',');
+          return new THREE.Vector3(
+            parseFloat(p[0]),
+            parseFloat(p[1]),
+            parseFloat(p[2])
+          );
+        });
+        var ctor = d.closed ? 'ClosedSplineCurve3' : 'SplineCurve3';
+        var curve = new THREE[ctor](points);
+
+        var onFrame = function onFrame(t) {
+          window.requestAnimationFrame(onFrame);
+          t = t % d.dur;
+          var i = t / d.dur;
+          try {
+            var p = curve.getPoint(i);
+            ent.setAttribute('position', p);
+          } catch (ex) {
+          }
+        };
+
+        onFrame();
+      },
+
+      update: function (oldData) {
+      },
+
+      remove: function () {
+      }
+    };
+
+    AFRAME.registerComponent('alongpath', alongpathComp);
   </script>
 </head>
 
 <body>
 <a-scene>
+  <a-assets>
+    <img id="grass" src="/assets/images/star-sky/grass.jpg">
+    <img id="coin" src="/assets/images/star-sky/coin.png">
+  </a-assets>
+
   <a-entity
     position="0 2 5"
     alongpath="path:
-      0,0,0
-      0,15,-2
-      3,14,-3
-      2,2,-1;
-    closed:true;
-    dur:50000"
+ 0,0,0
+ 0,0,-1
+ 1,1,-1
+ 2,1,0
+ 1,2,1
+ 0,15,-2
+ 3,14,-3
+ 1,2,-1
+ 2,1,-1
+ 1,1,-1
+ 1,2,-1
+ 2,2,0
+ 2,2,1
+ 1,1,2;
+  closed:true;
+  dur:30000"
   >
     <a-entity camera look-controls id="player">
-      <a-cursor color="#FFFFFF"/>
+      <a-cursor color="#FFFFFF" />
     </a-entity>
   </a-entity>
 
-  <a-torus color="#43A367" arc="180" radius="3" position="0 0 -3" radius-tubular="0.1"></a-torus>
-  <a-octahedron color="#FF926B" radius="1.5" position="2.2 0 -3"></a-octahedron>
+  <a-entity
+    geometry="primitive: sphere; buffer: false; skipCache: true; radius: 8;"
+    material="color: #42A057"
+    position="0 -10 0"
+  ></a-entity>
 
-  <a-sky color="#fefefe"></a-sky>
+  <a-cylinder
+    src="#coin"
+    radius=".2"
+    height=".02"
+    color="yellow"
+    position="1 1 -3"
+    rotation="0 0 90"
+  >
+    <a-animation
+      attribute="rotation"
+      dur="3000"
+      easing="linear"
+      fill="forwards"
+      to="0 360 90"
+      repeat="indefinite"
+    >
+    </a-animation>
+  </a-cylinder>
+
+  <a-torus color="#43A367" arc="180" radius="3" rotation="-30 0 0" position="0 -4 -3" radius-tubular="0.1"></a-torus>
+
+  <a-octahedron color="#FF926B" radius=".5" position="1.5 .3 -3">
+    <a-animation
+      attribute="rotation"
+      dur="3000"
+      easing="linear"
+      fill="forwards"
+      to="0 360 0"
+      repeat="indefinite"
+    >
+    </a-animation>
+  </a-octahedron>
+
+  <a-gradient-sky material="topColor: 0.00390625 0.09375 0.1796875; bottomColor: 0.0078125 0.12109375 0.23046875"></a-gradient-sky>
 </a-scene>
 </body>
 
